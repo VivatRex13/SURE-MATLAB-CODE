@@ -1,0 +1,30 @@
+! Touchstone file exported from HFSS 2024.1.0
+!        File:           C:/Users/armandas/Documents/Ansoft/Microstrip_Tests.aedt
+!        Generated:      03:52:57 PM Jun 10, 2026
+!        Design:         straight_microstrip1
+!        Project:        Microstrip_Tests
+!        Setup:          Setup1
+!        Solution:       LastAdaptive
+!
+! Variables:
+!        L_val = 0.15915494309nH
+!        W = 0.422mm
+!        aperture_x = 5.4mm
+!        aperture_y = 0.4mm
+!        c = 300000000m_per_sec
+!        cell_x = 10mm
+!        cell_y = 6.25mm
+!        d = 0.203mm
+!        f_0 = 10GHz
+!        g_w = 25mm
+!        l = 3.2mm
+!        lambda = 0.03
+!        offset_x = -0.385mm
+!
+# GHz S MA R 50.000000
+! Terminal data exported
+! Port[1] = 1
+! Port[2] = 2
+10                             0.531967643654966 -51.4347757226673 0.824749913044675 -96.548998026324 0.824749913044675 -96.548998026324 0.532839341105765 34.1969067199269 
+! Gamma         0                0                0                0                
+! Port Impedance         50               0                50               0                

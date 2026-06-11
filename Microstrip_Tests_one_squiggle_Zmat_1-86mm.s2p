@@ -1,0 +1,26 @@
+! Touchstone file exported from HFSS 2024.1.0
+!        File:           C:/Users/armandas/Documents/Ansoft/Microstrip_Tests.aedt
+!        Generated:      06:19:49 PM Jun  3, 2026
+!        Design:         one_squiggle_Zmat
+!        Project:        Microstrip_Tests
+!        Setup:          Setup1
+!        Solution:       LastAdaptive
+!
+! Variables:
+!        C_val = 0.3pF
+!        L_val = 0.15915494309nH
+!        Sq_W = 1.86mm
+!        W = 0.422mm
+!        d = 0.203mm
+!        g_w = 30mm
+!        gnd_len = 1.2mm
+!        l = 3.1mm
+!        load_len = 1.2mm
+!
+# GHz Z MA R 50.000000
+! Terminal data exported
+! Port[1] = 1
+! Port[2] = 2
+10                             1.43543862294191 89.6450303812812 1.64607865873858 -90.2290569080032 1.64607865873858 -90.2290569080031 1.3453798610057  89.6389322770922 
+! Gamma         0                0                0                0                
+! Port Impedance         50               0                50               0                
