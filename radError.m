@@ -1,0 +1,9 @@
+function [result] = radError(X_L,E_targ,Etheta,Z_LL,Z_LE,I_E)
+V_exc = -Z_LE*I_E;
+I_L = (1i*diag(X_L)+Z_LL)\V_exc;
+I_L = I_L.';
+I = insert_mid(I_L, I_E);
+E_tot = I*Etheta;
+err = E_targ - E_tot;
+result = 0.5*(err*err');
+end
