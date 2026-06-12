@@ -1,4 +1,4 @@
-S_data = sparameters('Microstrip_Tests_one_squiggle.s2p');
+S_data = sparameters('Microstrip_Tests_straight_microstrip.s2p');
 S = S_data.Parameters;
 Z_0 = 50;
 w = 2*pi*10e9;
@@ -21,5 +21,6 @@ S11_mag = abs(S11);
 S11_phase = rad2deg(angle(S11));
 
 plot(X_vals,S11_phase);
-disp(max(S11_phase));
-disp(min(S11_phase));
+ylabel("S11 Phase (deg)")
+xlabel("Complex Impedance (\Omega)")
+saveas(gcf, 'straight_s11_phase.png');
