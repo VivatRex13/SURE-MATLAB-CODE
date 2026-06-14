@@ -19,13 +19,16 @@ for i = 1:21
     Ephi(i,:) = Ephi_temp;
 end
 
+E_rl = zeros(1,91);
 E_targ = zeros(1,91);
 
-for i = -10:10
-    E_targ = E_targ + 
+for n = -10:10
+    E_targ = E_targ + exp(1i*n*k*d.*cos(theta))/21;
 end
 
-plot(theta,E_targ)
+% E_targ = 1/21.*(sin(21/2*k*d.*cos(theta))./sin(1/2*k*d.*cos(theta)));
+
+plot(theta,abs(E_targ))
 
 [x0,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat("UnitCell_Meander_Array_1D_Array_Meander_10mm.s21p",Z_0,Z_targ,f,C_min,C_max,21,11,-50);
 

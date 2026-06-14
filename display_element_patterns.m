@@ -19,17 +19,23 @@ for i = 1:21
     Ephi(i,:) = Ephi_temp;
 end
 
+E_rl = zeros(1,91);
 E_targ = zeros(1,91);
 
-% for n = -10:10
-%     E_targ = E_targ + exp(1i*n*k*d.*cos(theta));
-% end
+for n = -10:10
+    E_targ = E_targ + exp(1i*n*k*d.*cos(theta))/21;
+    E_rl = E_rl + Etheta(n+11,:);
+end
 
-E_targ = 1/21.*(sin(21/2*k*d.*cos(theta))./sin(1/2*k*d.*cos(theta)));
+E_rl_max = max(E_rl,[],"all");
+E_rl = E_rl ./ E_rl_max;
+
+% E_targ = 1/21.*(sin(21/2*k*d.*cos(theta))./sin(1/2*k*d.*cos(theta)));
 
 plot(theta,abs(E_targ))
+plot(theta,abs(E_rl))
 
-[x0,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat("UnitCell_Meander_Array_1D_Array_Meander_10mm.s21p",Z_0,Z_targ,f,C_min,C_max,21,11,-50);
+% [x0,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat("UnitCell_Meander_Array_1D_Array_Meander_10mm.s21p",Z_0,Z_targ,f,C_min,C_max,21,11,-50);
 
 I_E = 10;
 
