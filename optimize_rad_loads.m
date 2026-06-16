@@ -2,11 +2,11 @@ Etheta = zeros(21,91);
 Ephi = zeros(21,91);
 
 weight_mat = zeros(1,91);
-weight_max = 1.05;
+weight_max = 1.1;
 weight_min = 1;
 
 for i = 1:91
-    weight_mat(1,i) = weight_max - (weight_max-weight_min)*sqrt(abs(i-11));
+    weight_mat(1,i) = weight_max - (weight_max-weight_min)*sqrt(abs(i-46)/10);
 end
 
 Z_0 = 50;
@@ -22,7 +22,7 @@ C_max = 1.1e-12;
 d = 0.00625;
 
 for i = 1:21
-    [theta,phi,numFreqs,Etheta_temp,Ephi_temp,freqs] = loadData("straight_3-1mm_"+i+".ffd","Phi-Theta");
+    [theta,phi,numFreqs,Etheta_temp,Ephi_temp,freqs] = loadData("1-9mm_meander_10mm_width/meander_10mm_1-9mm_"+i+".ffd","Phi-Theta");
     Etheta(i,:) = Etheta_temp;
     Ephi(i,:) = Ephi_temp;
 end
@@ -31,7 +31,7 @@ E_rl = zeros(1,91);
 E_targ = zeros(1,91);
 
 for n = 1:21
-    E_targ = E_targ + exp(1i*(n-1)*k*d.*sind(theta))/21;
+    E_targ = E_targ + exp(1i*(n-1)*k*d.*sind(theta-10))/21;
     E_rl = E_rl + Etheta(n,:);
 end
 
@@ -47,20 +47,7 @@ I_E = 1;
 fun = @(x) radError(x,E_targ,Etheta,Z_LL,Z_LE,I_E,weight_mat);
 options = optimoptions(@fmincon, 'Display','iter', MaxFunctionEvaluations=1000000, UseParallel=true);
 
-% X_mat = fmincon(fun,x0,[],[],[],[],-1/(w*C_min)*ones(1,20),-1/(w*C_max)*ones(1,20),[],options);
 X_mat = fmincon(fun,x0,[],[],[],[],-1/(w*C_min)*ones(1,20),-1/(w*C_max)*ones(1,20),[],options);
+% X_mat = fmincon(fun,x0,[],[],[],[],10,100,[],options);
 
-V_exc = -Z_LE*I_E;
-I_L = (1i*diag(X_mat)+Z_LL)\V_exc;
-I_L = I_L.';
-I = insert_mid(I_L, I_E);
-E_tot = I*Etheta;
-E_max = max(E_tot);
-E_tot = E_tot / E_max;
-
-plot(theta,abs(E_tot))
-hold on
-plot(theta,abs(E_targ))
-hold off
-
-% C_mat = -1 ./ (w .* X_mat);
+C_mat = -1 ./ (w .* X_mat);
