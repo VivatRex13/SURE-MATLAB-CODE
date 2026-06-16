@@ -1,12 +1,20 @@
 Etheta = zeros(21,91);
 Ephi = zeros(21,91);
 
+weight_mat = zeros(1,91);
+weight_max = 1.05;
+weight_min = 1;
+
+for i = 1:91
+    weight_mat(1,i) = weight_max - (weight_max-weight_min)*sqrt(abs(i-11));
+end
+
 Z_0 = 50;
 Z_targ = 50;
 f = 1e10;
 w = 2*pi*f;
 e_0 = 8.854e-12;
-u_0 = 1.2566e-7;
+u_0 = 4*pi*1e-7;
 k = w*sqrt(u_0*e_0);
 C_min = 0.14e-12;
 C_max = 1.1e-12;
@@ -14,7 +22,7 @@ C_max = 1.1e-12;
 d = 0.00625;
 
 for i = 1:21
-    [theta,phi,numFreqs,Etheta_temp,Ephi_temp,freqs] = loadData("meander_10mm_1-9mm_"+i+".ffd","Phi-Theta");
+    [theta,phi,numFreqs,Etheta_temp,Ephi_temp,freqs] = loadData("straight_3-1mm_"+i+".ffd","Phi-Theta");
     Etheta(i,:) = Etheta_temp;
     Ephi(i,:) = Ephi_temp;
 end
@@ -22,21 +30,37 @@ end
 E_rl = zeros(1,91);
 E_targ = zeros(1,91);
 
-for n = -10:10
-    E_targ = E_targ + exp(1i*n*k*d.*cos(theta))/21;
+for n = 1:21
+    E_targ = E_targ + exp(1i*(n-1)*k*d.*sind(theta))/21;
+    E_rl = E_rl + Etheta(n,:);
 end
+
+E_rl_max = max(E_rl,[],"all");
+E_rl = E_rl ./ E_rl_max;
 
 % E_targ = 1/21.*(sin(21/2*k*d.*cos(theta))./sin(1/2*k*d.*cos(theta)));
 
-plot(theta,abs(E_targ))
-
 [x0,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat("UnitCell_Meander_Array_1D_Array_Meander_10mm.s21p",Z_0,Z_targ,f,C_min,C_max,21,11,-50);
 
-I_E = 10;
+I_E = 1;
 
-fun = @(x) radError(x,E_targ,Etheta,Z_LL,Z_LE,I_E);
+fun = @(x) radError(x,E_targ,Etheta,Z_LL,Z_LE,I_E,weight_mat);
 options = optimoptions(@fmincon, 'Display','iter', MaxFunctionEvaluations=1000000, UseParallel=true);
 
 % X_mat = fmincon(fun,x0,[],[],[],[],-1/(w*C_min)*ones(1,20),-1/(w*C_max)*ones(1,20),[],options);
+X_mat = fmincon(fun,x0,[],[],[],[],-1/(w*C_min)*ones(1,20),-1/(w*C_max)*ones(1,20),[],options);
+
+V_exc = -Z_LE*I_E;
+I_L = (1i*diag(X_mat)+Z_LL)\V_exc;
+I_L = I_L.';
+I = insert_mid(I_L, I_E);
+E_tot = I*Etheta;
+E_max = max(E_tot);
+E_tot = E_tot / E_max;
+
+plot(theta,abs(E_tot))
+hold on
+plot(theta,abs(E_targ))
+hold off
 
 % C_mat = -1 ./ (w .* X_mat);
