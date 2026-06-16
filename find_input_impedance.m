@@ -1,4 +1,4 @@
-S_data = sparameters('UnitCell_Meander_Array_1D_Array_Meander_6-25mm.s21p');
+S_data = sparameters('1D_Antenna_Array_Parallel_Microstrip_ZMatrix_5-8mm.s21p');
 S = S_data.Parameters;
 Z_0 = 50;
 Z_targ = 50;
@@ -33,8 +33,8 @@ options = optimoptions(@fmincon, 'Display','iter', MaxFunctionEvaluations=100000
 
 x0 = -50*ones(1,20);
 % Z_mat = fmincon(fun,x0,[],[],[],[],-300*ones(20),0*ones(20),[],options);
-Z_mat = fmincon(fun,x0,[],[],[],[],-1/(w*C_min)*ones(1,20),-1/(w*C_max)*ones(1,20),[],options);
-% Z_mat = fmincon(fun,x0,[],[],[],[],-300*ones(1,20),0*ones(1,20),[],options)
+% Z_mat = fmincon(fun,x0,[],[],[],[],-1/(w*C_min)*ones(1,20),-1/(w*C_max)*ones(1,20),[],options);
+Z_mat = fmincon(fun,x0,[],[],[],[],10*ones(1,20),100*ones(1,20),[],options);
 
 % Z_mat = -1 ./ (2*pi*10^10*0.14e-12)*ones(1,20);
 

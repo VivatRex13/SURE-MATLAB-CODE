@@ -6,7 +6,7 @@ I = insert_mid(I_L, I_E);
 E_tot = I*Etheta;
 E_max = max(E_tot);
 E_tot = E_tot/E_max;
-err = abs(E_targ) - abs(E_tot);
+err = E_targ - E_tot;
 err = err.*weight_mat;
 result = 0.5*(err*err');
 end

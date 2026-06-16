@@ -6,7 +6,7 @@ E_tot = I*Etheta;
 E_max = max(E_tot);
 E_tot = E_tot / E_max;
 
-plot(theta,abs(E_tot))
+plot(theta,20*log10(abs(E_tot)))
 hold on
-plot(theta,abs(E_targ))
+plot(theta,20*log10(abs(E_targ)))
 hold off
