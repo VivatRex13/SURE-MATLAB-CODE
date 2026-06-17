@@ -1,4 +1,4 @@
-S_data = sparameters('Microstrip_Tests_straight_microstrip.s2p');
+S_data = sparameters('straight_ms_unit-cell_zmatrix/Microstrip_Tests_straight_microstrip1_3-5mm.s2p');
 S = S_data.Parameters;
 Z_0 = 50;
 w = 2*pi*10e9;

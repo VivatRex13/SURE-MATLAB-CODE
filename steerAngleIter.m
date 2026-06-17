@@ -8,7 +8,7 @@ curr_init = x0*ones(1,20);
 while curr_ang <= final_ang + 0.00001
     E_targ = zeros(1,size(theta,2));
     for n = 1:21
-        E_targ = E_targ + exp(1i*(n-1)*k*d.*sind(theta-curr_ang))/21;
+        E_targ = E_targ + exp(1i*(n-1)*k*d.*(sind(theta)-sind(curr_ang)))/21;
     end
 
     fun = @(x) radError(x,E_targ,Etheta,Z_LL,Z_LE,I_E);
