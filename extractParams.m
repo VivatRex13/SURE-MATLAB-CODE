@@ -1,0 +1,18 @@
+function [Z_LL,Z_LE,Z_EL,Z_EE] = extractParams(fileName,Z_0,array_size,excitation_index)
+S_data = sparameters(fileName);
+S = S_data.Parameters;
+
+Z = Z_0*(eye(array_size)+S)/(eye(array_size)-S);
+
+Z_LL = Z;
+Z_LL(excitation_index,:) = [];
+Z_LL(:,excitation_index) = [];
+
+Z_LE = Z(:,excitation_index);
+Z_LE(excitation_index) = [];
+
+Z_EL = Z(excitation_index,:);
+Z_EL(excitation_index) = [];
+
+Z_EE = Z(excitation_index,excitation_index);
+end
