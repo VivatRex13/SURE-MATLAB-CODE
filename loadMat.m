@@ -1,4 +1,4 @@
-function [X_L,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat(fileName, Z_0, Z_targ, f, C_min, C_max, array_size, excitation_index, x0_val)
+function [X_L,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat(fileName, Z_0, Z_targ, f, X_min, X_max, array_size, excitation_index, x0_val)
 S_data = sparameters(fileName);
 S = S_data.Parameters;
 w = 2*pi*f;
@@ -22,5 +22,5 @@ options = optimoptions(@fmincon, 'Display','iter', MaxFunctionEvaluations=100000
 
 x0 = x0_val*ones(1,20);
 
-X_L = fmincon(fun,x0,[],[],[],[],-1/(w*C_min)*ones(1,20),-1/(w*C_max)*ones(1,20),[],options);
+X_L = fmincon(fun,x0,[],[],[],[],X_min*ones(1,20),X_max*ones(1,20),[],options);
 end

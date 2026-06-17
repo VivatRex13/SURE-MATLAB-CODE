@@ -1,4 +1,4 @@
-S_data = sparameters('1D_Antenna_Array_Parallel_Microstrip_ZMatrix_5-8mm.s21p');
+S_data = sparameters('straight_microstrip_zmatrix/UnitCell_Meander_Array_1D_Array_Straight_ZMat_3-5mm_ms.s21p');
 S = S_data.Parameters;
 Z_0 = 50;
 Z_targ = 50;
