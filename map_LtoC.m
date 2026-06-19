@@ -19,8 +19,24 @@ Z12m = Zm(1,2);
 Z21m = Zm(2,1);
 Z22m = Zm(2,2);
 
-Z_in = Z11-(Z12*Z21)./(1i*X_mat+Z22);
+X_vals = linspace(10,100,401);
+C_vals = linspace(0.14e-12,1.09e-12,401);
+Xm_vals = -1 ./ (w.*C_vals);
 
-Xm_vals = -1i*(Z11m-(Z12m*Z21m)./Z_in-Z22m);
+Z_in = Z11-(Z12*Z21)./(1i*X_vals+Z22);
+S11 = (Z_in-Z_0)./(Z_in+Z_0);
 
-C_vals = 1 ./ (w*Xm_vals)
+Zm_in = Z11m-(Z12m*Z21m)./(1i*Xm_vals+Z22m);
+S11m = (Zm_in-Z_0)./(Zm_in+Z_0);
+
+S11_mag = abs(S11);
+S11_phase = rad2deg(angle(S11));
+
+S11m_mag = abs(S11m);
+S11m_phase = rad2deg(angle(S11m));
+
+shared_phases = interp1(X_vals, S11_phase, X_mat);
+
+mapped_reactances = interp1(S11m_phase, Xm_vals, shared_phases);
+
+C_vals = 1 ./ (w*mapped_reactances);
