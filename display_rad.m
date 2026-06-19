@@ -1,5 +1,5 @@
 fields_data = readtable("fields_data/straight_ms_3-5mm_fields.csv");
-load("mat_files/straight_3-5mm_10mm_sym.mat","X_mat","Z_LE","I_E","Z_LL","E_targ","Etheta")
+load("mat_files/meander_3-5mm_10mm_sym.mat","X_mat","Z_LE","I_E","Z_LL","E_targ","Etheta")
 fields_data_arr = table2array(fields_data);
 theta_vals = fields_data_arr(:,3);
 norm_vals = fields_data_arr(:,4);
