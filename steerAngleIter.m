@@ -13,7 +13,7 @@ while curr_ang <= final_ang + 0.00001
 
     fun = @(x) radError(x,E_targ,Etheta,Z_LL,Z_LE,I_E);
     options = optimoptions(@fmincon, 'Display','iter', MaxFunctionEvaluations=1000000, UseParallel=true);
-    X_mat = fmincon(fun,curr_init,[],[],[],[],X_min,X_max,[],options);
+    X_mat = fmincon(fun,curr_init,[],[],[],[],X_min*ones(1,20),X_max*ones(1,20),[],options);
     % curr_init = X_mat;
     save("mat_files/"+file_prefix+"_"+round(curr_ang)+"deg.mat","X_mat","Z_LL","Z_LE","Z_EL","Z_EE","I_E","Etheta","E_targ");
     curr_ang = curr_ang + iter;

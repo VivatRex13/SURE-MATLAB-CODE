@@ -1,6 +1,11 @@
 S_data = sparameters('straight_ms_unit-cell_zmatrix/Microstrip_Tests_straight_microstrip_3-5mm.s2p');
 S_data_m = sparameters('meander_unit-cell_zmatrix/Microstrip_Tests_one_squiggle_2mm.s2p');
-load("mat_files/straight_3-5mm_10mm_0deg.mat","X_mat")
+% X_mats = zeros(9,20);
+% for i = 1:9
+%     load("mat_files/straight_3-5mm_10mm_"+(i-1)*5+"deg.mat","X_mat");
+%     X_mats(i,:) = X_mat;
+% end
+load("mat_files/straight_3-5mm_10mm_cos.mat","X_mat");
 S = S_data.Parameters;
 Sm = S_data_m.Parameters;
 Z_0 = 50;
@@ -20,7 +25,7 @@ Z21m = Zm(2,1);
 Z22m = Zm(2,2);
 
 X_vals = linspace(10,100,401);
-C_vals = linspace(0.14e-12,1.09e-12,401);
+C_vals = linspace(0.14e-12,1.1e-12,401);
 Xm_vals = -1 ./ (w.*C_vals);
 
 Z_in = Z11-(Z12*Z21)./(1i*X_vals+Z22);
@@ -35,8 +40,11 @@ S11_phase = rad2deg(angle(S11));
 S11m_mag = abs(S11m);
 S11m_phase = rad2deg(angle(S11m));
 
-shared_phases = interp1(X_vals, S11_phase, X_mat);
+shared_phases = interp1(X_vals, S11_phase, X_mats);
 
 mapped_reactances = interp1(S11m_phase, Xm_vals, shared_phases);
 
-C_vals = 1 ./ (w*mapped_reactances);
+C_vals = -1 ./ (w*mapped_reactances) .* 1e12;
+X_vals = mapped_reactances;
+
+save("mat_files/meander_2mm_10mm_cos_mapped.mat","X_vals");

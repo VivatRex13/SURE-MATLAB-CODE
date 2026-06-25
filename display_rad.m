@@ -1,11 +1,16 @@
-fields_data = readtable("fields_data/straight_ms_3-5mm_fields.csv");
-load("mat_files/meander_3-5mm_10mm_sym.mat","X_mat","Z_LE","I_E","Z_LL","E_targ","Etheta")
+fields_data = readtable("fields_data/meander_2mm_cos.csv");
+% angle = 10;
+load("mat_files/meander_2mm_10mm_mapped.mat","Z_LE","I_E","Z_LL")
+load("mat_files/straight_3-5mm_10mm_cos.mat","Etheta","E_targ")
+% load("mat_files/straight_3-5mm_10mm_"+angle+"deg.mat","Etheta","E_targ")
+load("mat_files/meander_2mm_10mm_cos.mat","X_vals")
+% X_vals = X_vals(angle/5+1);
 fields_data_arr = table2array(fields_data);
 theta_vals = fields_data_arr(:,3);
 norm_vals = fields_data_arr(:,4);
 
 V_exc = -Z_LE*I_E;
-I_L = (1i*diag(X_mat)+Z_LL)\V_exc;
+I_L = (1i*diag(X_vals)+Z_LL)\V_exc;
 I_L = I_L.';
 I = insert_mid(I_L, I_E);
 E_tot = I*Etheta;
@@ -15,12 +20,16 @@ E_tot = E_tot / E_max;
 plot(theta,20*log10(abs(E_tot)))
 hold on
 plot(theta,20*log10(abs(E_targ)))
-% plot(theta_vals,20*log10(abs(norm_vals)))
+plot(theta_vals,20*log10(abs(norm_vals)))
 hold off
-legend("Total E Field (MATLAB)", "Target E Field")
+% legend("Total E Field (MATLAB)", "Target E Field")
+legend("Total E Field (MATLAB)", "Target E Field", "Total E Field (HFSS)")
+title("Symmetric Capacitive Loads E Field")
 xlabel("\theta (deg)")
 ylabel("Normalized Magnitude")
 
-saveas(gcf, 'figures/3-5mm_ms_sym.png');
+saveas(gcf, 'figures/2mm_meander_cosine.png');
+
+% L_mat = X_mat ./ (w) .* 1e9;
 
 % Z_excited = Z_EL/(-1i*diag(X_mat)-Z_LL)*Z_LE+Z_EE
