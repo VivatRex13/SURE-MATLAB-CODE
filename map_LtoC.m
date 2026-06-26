@@ -40,11 +40,11 @@ S11_phase = rad2deg(angle(S11));
 S11m_mag = abs(S11m);
 S11m_phase = rad2deg(angle(S11m));
 
-shared_phases = interp1(X_vals, S11_phase, X_mats);
+shared_phases = interp1(X_vals, S11_phase, X_mat);
 
 mapped_reactances = interp1(S11m_phase, Xm_vals, shared_phases);
 
-C_vals = -1 ./ (w*mapped_reactances) .* 1e12;
+C_vals = -1 ./ (w .* mapped_reactances) .* 1e12;
 X_vals = mapped_reactances;
 
 save("mat_files/meander_2mm_10mm_cos_mapped.mat","X_vals");
