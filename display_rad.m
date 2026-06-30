@@ -1,9 +1,9 @@
 fields_data = readtable("fields_data/meander_2mm_cos.csv");
 % ang = 10;
-load("mat_files/meander_2mm_10mm_cos.mat","Z_LE","I_E","Z_LL")
-load("mat_files/straight_3-5mm_10mm_cos.mat","Etheta","E_targ")
+load("sym_cos/meander_2mm_10mm_cos.mat","Z_LE","I_E","Z_LL")
+load("sym_cos/straight_3-5mm_10mm_cos.mat","Etheta","E_targ")
 % load("mat_files/straight_3-5mm_10mm_"+ang+"deg.mat","Etheta","E_targ")
-load("mat_files/meander_2mm_10mm_cos_mapped.mat","X_vals")
+load("sym_cos/meander_2mm_10mm_cos_mapped.mat","X_vals")
 % Xm_vals = X_vals;
 % load("mat_files/meander_2mm_10mm_sym_optim.mat","X_vals")
 % X_vals = X_vals(angle/5+1);
@@ -28,14 +28,25 @@ E_tot = I*Etheta;
 E_max = max(E_tot);
 E_tot = E_tot / E_max;
 
+load("sym_cos/straight_3-5mm_10mm_cos.mat","X_mat","Z_LL","Z_LE","I_E")
+
+V_exc = -Z_LE*I_E;
+I_L = (1i*diag(X_mat)+Z_LL)\V_exc;
+I_L = I_L.';
+I = insert_mid(I_L, I_E);
+EL_tot = I*Etheta;
+E_max = max(EL_tot);
+EL_tot = EL_tot / E_max;
+
 plot(theta,20*log10(abs(E_tot)))
 hold on
 % plot(theta,20*log10(abs(Em_tot)),"--","LineWidth",2)
 plot(theta,20*log10(abs(E_targ)))
 plot(theta_vals,20*log10(abs(norm_vals)))
+plot(theta,20*log10(EL_tot))
 hold off
 % legend("Total E Field (MATLAB)", "Target E Field")
-legend("Total E Field (MATLAB)", "Target E Field", "Total E Field (HFSS)", "Location","south")
+legend("Total E Field (MATLAB)", "Target E Field", "Total E Field (HFSS)", "Total Inductive E Field", "Location","south")
 title("Symmetric Capacitive Loads E Field Cosine")
 xlabel("\theta (deg)")
 ylabel("Normalized Magnitude")

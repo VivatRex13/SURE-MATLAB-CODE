@@ -1,4 +1,4 @@
-function optimSym(file_prefix,zmat_file,Etheta,E_targ,x0,X_min,X_max,I_E,Z_0,arr_size,exc_ind)
+function optimSym(file_prefix,zmat_file,Etheta,E_targ,theta,x0,X_min,X_max,I_E,Z_0,arr_size,exc_ind)
 [Z_LL,Z_LE,Z_EL,Z_EE] = extractParams(zmat_file,Z_0,arr_size,exc_ind);
 
 curr_init = x0;
@@ -14,4 +14,4 @@ for i = 1:10
     X_mat(1,arr_size-i) = X_mat_half(1,i);
 end
 
-save("mat_files/"+file_prefix+".mat","X_mat","Z_LL","Z_LE","Z_EL","Z_EE","I_E","Etheta","E_targ");
+save(file_prefix+".mat","X_mat","theta","Z_LL","Z_LE","Z_EL","Z_EE","I_E","Etheta","E_targ");
