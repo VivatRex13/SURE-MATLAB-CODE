@@ -44,3 +44,4 @@ X_mat = mapped_reactances;
 
 [Etheta,Ephi,theta,phi] = extractFields("element_patterns/2mm_meander_10mm_width/meander_10mm_2mm","Phi-Theta");
 save("sym_const/meander_2mm_10mm_sym_mapped.mat","X_mat","theta","Z_LL","Z_LE","Z_EL","Z_EE","I_E","Etheta","E_targ");
+optimC("sym_const/meander_2mm_10mm_sym_optim","sym_const/meander_2mm_10mm_sym_mapped.mat",X_min,X_max);

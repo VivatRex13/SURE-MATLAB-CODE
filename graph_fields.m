@@ -1,8 +1,44 @@
+%% CONSTANTS
+Z_0 = 50; % Characteristic Impedance
+Z_targ = 50; % Target Input Impedance
+f = 1e10; % Operating Frequency
+w = 2*pi*f;
+e_0 = 8.8541878188e-12; % Permittivity of Free Space
+u_0 = 4*pi*1e-7; % Permeability of Free Space
+k = w*sqrt(u_0*e_0); % Wavenumber
+C_min = 0.14e-12; % Minimum Capacitance (F)
+X_min = -1 / (w*C_min);
+C_max = 1.1e-12; % Maximum Capacitance (F)
+X_max = -1 / (w*C_max);
+d = 0.00625; % Cell Length (m)
+
+[Etheta,Ephi,theta,phi] = extractFields("element_patterns/straight_ms_10mm_3-5mm/straight_3-5mm","Phi-Theta");
+
+E_rl = zeros(1,91);
+E_targ = zeros(1,91);
+
+for n = 1:21
+    E_targ = E_targ + exp(1i*(n-1)*k*d.*sind(theta));
+end
+% COSINE ELEMENT cos(pi*(n-11)/21)*
+E_targ = E_targ./max(E_targ);
+
+I_E = 1;
+
+% [X_L,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat("straight_ms_zmatrix/UnitCell_Meander_Array_1D_Array_Straight_ZMat_3-5mm_ms.s21p", Z_0, Z_targ, f, 10, 100, 21, 11, 0);
+
+x0 = 50.*ones(1,10);
+
+[X_mat,Z_LL,Z_LE,Z_EL,Z_EE,I_E] = optimSymOut("straight_ms_zmatrix/UnitCell_Meander_Array_1D_Array_Straight_ZMat_3-5mm_ms.s21p",Etheta,E_targ,x0,10,100,I_E,Z_0,21,11);
+
 [Es_tot,Ss,Xs_vals] = forwardSolve("sym_const/straight_3-5mm_10mm_sym.mat");
 [Em_tot,Sm,Xm_vals] = forwardSolve("sym_const/meander_2mm_10mm_sym_mapped.mat");
+% [Emo_tot,Smo,Xmo_vals] = forwardSolve("sym_const/meander_2mm_10mm_sym_optim.mat");
 theta=linspace(-90,90,91);
 plot(theta,20*log10(Es_tot))
 hold on
 plot(theta,20*log10(Em_tot))
+% plot(theta,20*log10(Emo_tot))
 plot(theta,20*log10(E_targ))
 hold off
+legend("Inductive Loads","Mapped Capacitive Loads","Optimized Capacitive Loads","Target","Location","south")
