@@ -57,7 +57,7 @@ Z_in = Zm_EL/(-1i*diag(Xm_mat)-Zm_LL)*Zm_LE+Zm_EE;
 % [Emo_tot,Smo,Xmo_vals] = forwardSolve("sym_const/meander_2mm_10mm_sym_optim.mat");
 plot(theta,20*log10(Em_tot))
 hold on
-plot(theta_vals,20*log10(norm_vals))
+% plot(theta_vals,20*log10(norm_vals))
 % plot(theta,20*log10(Em_tot))
 % plot(theta,20*log10(Emo_tot))
 % plot(theta,20*log10(E_targ))
