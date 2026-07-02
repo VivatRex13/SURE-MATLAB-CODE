@@ -1,7 +1,7 @@
 function [X_mat,Z_LL,Z_LE,Z_EL,Z_EE,I_E] = optimSymOut(zmat_file,Etheta,E_targ,x0,X_min,X_max,I_E,Z_0,arr_size,exc_ind)
 [Z_LL,Z_LE,Z_EL,Z_EE] = extractParams(zmat_file,Z_0,arr_size,exc_ind);
 
-curr_init = x0;
+curr_init = x0(1,1:10);
 
 fun = @(x) radErrorSym(x,E_targ,Etheta,Z_LL,Z_LE,I_E);
 options = optimoptions(@fmincon, 'Display','iter', MaxFunctionEvaluations=1000000, UseParallel=true);

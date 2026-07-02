@@ -1,5 +1,4 @@
-function [E_tot,S,X_L] = forwardSolve(fileName)
-load(fileName,"X_mat","Z_LL","Z_LE","Z_EL","Z_EE","I_E","Etheta");
+function [E_tot,S,X_L] = forwardSolve(X_mat,Z_LL,Z_LE,Z_EL,Z_EE,I_E,Etheta)
 X_L = X_mat;
 V_exc = -Z_LE*I_E;
 I_L = (1i*diag(X_L)+Z_LL)\V_exc;
