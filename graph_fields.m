@@ -21,7 +21,7 @@ E_rl = zeros(1,91);
 E_targ = zeros(1,91);
 
 for n = 1:21
-    E_targ = E_targ + exp(1i*(n-1)*k*d.*sind(theta));
+    E_targ = E_targ + cos(pi*(n-11)/21)*exp(1i*(n-1)*k*d.*sind(theta));
 end
 % COSINE ELEMENT cos(pi*(n-11)/21)*
 E_targ = E_targ./max(E_targ);
@@ -31,7 +31,7 @@ I_E = 1;
 % [X_L,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat("straight_ms_zmatrix/UnitCell_Meander_Array_1D_Array_Straight_ZMat_3-5mm_ms.s21p", Z_0, Z_targ, f, 10, 100, 21, 11, 0);
 
 %% OPTIMZING FOR LOAD
-x0 = 50.*ones(1,20);
+x0 = 45.*ones(1,20);
 
 [Xs_mat,Z_LL,Z_LE,Z_EL,Z_EE,I_E] = optimSymOut("straight_ms_zmatrix/UnitCell_Meander_Array_1D_Array_Straight_ZMat_3-5mm_ms.s21p",Etheta,E_targ,x0,10,100,I_E,Z_0,21,11);
 [Zm_LL,Zm_LE,Zm_EL,Zm_EE] = extractParams("meander_array_zmatrix/UnitCell_Meander_Array_1D_Array_Meander_10mm_2mm.s21p",Z_0,21,11);
@@ -43,7 +43,7 @@ Cm_mat = -1 ./ (w*Xm_mat) .* 1e12;
 % Xm_mat = zeros(1,20);
 
 %% IMPORT HFSS GRAPH
-fields_data = readtable("sym_const/meander_2mm_sym.csv");
+fields_data = readtable("sym_cos/meander_2mm_cos.csv");
 fields_data_arr = table2array(fields_data);
 theta_vals = fields_data_arr(:,3);
 norm_vals = fields_data_arr(:,4);
