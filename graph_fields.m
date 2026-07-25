@@ -43,7 +43,7 @@ Cm_mat = -1 ./ (w*Xm_mat) .* 1e12;
 % Xm_mat = zeros(1,20);
 
 %% IMPORT HFSS GRAPH
-fields_data = readtable("sym_cos/meander_2mm_cos_optim.csv");
+fields_data = readtable("sym_cos/meander_2mm_cos.csv");
 fields_data_arr = table2array(fields_data);
 theta_vals = fields_data_arr(:,3);
 norm_vals = fields_data_arr(:,4);
@@ -60,11 +60,11 @@ hold on
 plot(theta,20*log10(Es_tot))
 plot(theta,20*log10(Em_tot))
 % plot(theta,20*log10(Emo_tot))
-% plot(theta_vals,20*log10(norm_vals))
+plot(theta_vals,20*log10(norm_vals))
 hold off
-title("Cosine Taper Target Meander Radiation Pattern")
+title("No Taper Target Meander Radiation Pattern")
 xlabel("\theta (deg)")
 ylabel("Field Strength (dB)")
 legend("Target","MATLAB Straight MS","MATLAB Meander MS","HFSS Sim","Location","south")
 % legend("MATLAB","HFSS","Location","south")
-saveas(gcf,"figures/sym_cos_rad_pattern_meander_ms.png")
+saveas(gcf,"figures/sym_const_rad_pattern_hfss_sim.png")
