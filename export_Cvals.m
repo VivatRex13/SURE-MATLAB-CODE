@@ -2,7 +2,7 @@
 X = 60;
 f = 1e10;
 w = 2*pi*f;
-C = 1 / (w*X);
+C = 1 / (w*X) * 1e12;
 
 
 % 1. Open the script file

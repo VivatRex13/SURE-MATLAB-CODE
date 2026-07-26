@@ -31,13 +31,13 @@ t = tiledlayout(1,1);
 
 % Bottom Axis & Plot (Straight MS)
 ax1 = axes(t);
-h1 = plot(ax1, X_vals, S11_phase, "-k");
+h1 = plot(ax1, X_vals, S11_phase, "-k","LineWidth",2);
 xlabel("Reactance (\Omega)")
 ylabel("S11 Phase (deg)")
 
 % Top Axis & Plot (Meander MS)
 ax2 = axes(t);
-h2 = plot(ax2, Xm_vals, S11m_phase, '-r');
+h2 = plot(ax2, Xm_vals, S11m_phase, '-r',"LineWidth",2);
 ax2.XAxisLocation = 'top';
 ax2.Color = 'none';
 

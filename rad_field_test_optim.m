@@ -54,7 +54,7 @@ for i = 1:10
 end
 
 % Import HFSS Graph
-fields_data = readtable("test/optimized_test_fields.csv");
+fields_data = readtable("test/optimized_const_test_fields.csv");
 fields_data_arr = table2array(fields_data);
 theta_vals = fields_data_arr(:,1);
 norm_vals = zeros(91,10);

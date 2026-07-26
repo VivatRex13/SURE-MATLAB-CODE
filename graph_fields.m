@@ -26,6 +26,16 @@ end
 % COSINE ELEMENT cos(pi*(n-11)/21)*
 E_targ = E_targ./max(E_targ);
 
+%% PLOT ARRAY FACTOR ELEMENT AMPLITUDES
+% n = 1:21;
+% plot(n,cos(pi*(n-11)/21))
+% title("Array Factor Dipole Amplitudes")
+% xlabel("Unit Cell")
+% ylabel("Normalized Current Magnitude")
+% xlim([1,21])
+% saveas(gcf,"figures/cos_taper_amplitudes.png")
+%%
+
 I_E = 1;
 
 % [X_L,Z_LL,Z_LE,Z_EL,Z_EE] = loadMat("straight_ms_zmatrix/UnitCell_Meander_Array_1D_Array_Straight_ZMat_3-5mm_ms.s21p", Z_0, Z_targ, f, 10, 100, 21, 11, 0);
@@ -54,17 +64,15 @@ Z_in = Zm_EL/(-1i*diag(Xm_mat)-Zm_LL)*Zm_LE+Zm_EE;
 %% GRAPHING OUTPUT
 [Es_tot,Ss,Xs_vals] = forwardSolve(Xs_mat,Z_LL,Z_LE,Z_EL,Z_EE,I_E,Etheta);
 [Em_tot,Sm,Xm_vals] = forwardSolve(Xm_mat,Zm_LL,Zm_LE,Zm_EL,Zm_EE,I_E,Emtheta);
-% [Emo_tot,Smo,Xmo_vals] = forwardSolve("sym_const/meander_2mm_10mm_sym_optim.mat");
-plot(theta,20*log10(E_targ))
+plot(theta,20*log10(E_targ),"LineStyle",":","LineWidth",3)
 hold on
-plot(theta,20*log10(Es_tot))
-plot(theta,20*log10(Em_tot))
-% plot(theta,20*log10(Emo_tot))
-plot(theta_vals,20*log10(norm_vals))
+plot(theta,20*log10(Es_tot),"LineWidth",2)
+plot(theta,20*log10(Em_tot),"LineWidth",2)
+plot(theta_vals,20*log10(norm_vals),"LineWidth",2)
 hold off
-title("No Taper Target Meander Radiation Pattern")
+title("Cosine Taper Target Radiation Pattern")
 xlabel("\theta (deg)")
-ylabel("Field Strength (dB)")
+ylabel("Normalized Field Strength (dB)")
 legend("Target","MATLAB Straight MS","MATLAB Meander MS","HFSS Sim","Location","south")
 % legend("MATLAB","HFSS","Location","south")
-saveas(gcf,"figures/sym_const_rad_pattern_hfss_sim.png")
+saveas(gcf,"figures/sym_cos_rad_hfss_sim.png")
