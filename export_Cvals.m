@@ -16,10 +16,10 @@ fprintf(fid, 'Set oProject = oDesktop.GetActiveProject()\n'); % Grabs your open 
 fprintf(fid, 'Set oDesign = oProject.GetActiveDesign()\n');   % Grabs your active window
 
 % 3. Loop through and assign variables directly to that active window
-for i = 1:length(C_mat)/2
+for i = 1:length(Cm_mat)/2
     varName = sprintf('C%d', i);
     varName2 = sprintf('C%d', 21-i);
-    varValue = sprintf('if(State >= %d, %gpf, %gpf)', i, C_mat(i), C); 
+    varValue = sprintf('%gpf', Cm_mat(i)); 
     
     % This command targets the selected local design properties explicitly
     fprintf(fid, 'oDesign.SetVariableValue "%s", "%s"\n', varName, varValue);

@@ -22,7 +22,7 @@ E_rl = zeros(1,91);
 E_targ = zeros(1,91);
 
 for n = 1:21
-    E_targ = E_targ + exp(1i*(n-1)*k*d.*sind(theta));
+    E_targ = E_targ + cos(pi*(n-11)/21)*exp(1i*(n-1)*k*d.*sind(theta));
 end
 % COSINE ELEMENT cos(pi*(n-11)/21)*
 E_targ = E_targ./max(E_targ);
@@ -31,7 +31,7 @@ E_targ = E_targ./max(E_targ);
 [Zm_LL,Zm_LE,Zm_EL,Zm_EE] = extractParams("meander_array_zmatrix/UnitCell_Meander_Array_1D_Array_Meander_10mm_2mm.s21p",Z_0,21,11);
 
 % Define Z matrices
-x0 = 50.*ones(1,20);
+x0 = 45.*ones(1,20);
 
 [Xs_mat,Z_LL,Z_LE,Z_EL,Z_EE,I_E] = optimSymOut("straight_ms_zmatrix/UnitCell_Meander_Array_1D_Array_Straight_ZMat_3-5mm_ms.s21p",Etheta,E_targ,x0,10,100,I_E,Z_0,21,11);
 Xval = -60;
@@ -54,7 +54,7 @@ for i = 1:10
 end
 
 % Import HFSS Graph
-fields_data = readtable("test/optimized_const_test_fields.csv");
+fields_data = readtable("test/optimized_cos_test_fields.csv");
 fields_data_arr = table2array(fields_data);
 theta_vals = fields_data_arr(:,1);
 norm_vals = zeros(91,10);
@@ -72,5 +72,5 @@ for i = 1:10
     xlabel("\theta (deg)")
     ylabel("Field Strength (dB)")
     legend("MATLAB","HFSS Sim")
-    saveas(gcf,"figures/test_fields/optim_const_state"+i+".png")
+    saveas(gcf,"figures/test_fields/optim_cos_state"+i+".png")
 end

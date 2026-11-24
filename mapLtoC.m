@@ -1,6 +1,6 @@
 function X_mat = mapLtoC(X_arr)
 S_data = sparameters("straight_ms_unit-cell_zmatrix/Microstrip_Tests_straight_microstrip_3-5mm.s2p");
-S_data_m = sparameters("meander_unit-cell_zmatrix/Microstrip_Tests_one_squiggle_2mm.s2p");
+S_data_m = sparameters("meander_unit-cell_zmatrix/Microstrip_Tests_one_squiggle_thick_1mm.s2p");
 S = S_data.Parameters;
 Sm = S_data_m.Parameters;
 Z_0 = 50;
